@@ -1,5 +1,11 @@
 # Data-Science-TUDeflt
 
+##How to test if your mapper/reducer works before running it on cluster
+
+```
+./map.py < inputfile.csv | sort | ./reduce.py
+```
+
 ##How to run it on cluster:
 
 ###Put the txt file into the cluster
