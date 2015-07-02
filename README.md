@@ -49,3 +49,8 @@ hadoop fs -mv inputfile.csv jobinput/inputfile.csv
 ```
 hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.5.0-mr1-cdh5.3.0.jar -mapper map.py -reducer reduce.py -file map.py -file reduce.py -input jobinput -output joboutput
 ```
+
+###Obtain output
+```
+hadoop fs -cat joboutput/part-00000 >> hadoopoutput.txt
+```
