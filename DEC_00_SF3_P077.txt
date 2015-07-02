@@ -1,0 +1,13 @@
+P077
+MEDIAN FAMILY INCOME IN 1999 (DOLLARS) [1]
+
+Universe: Families
+
+NOTE: Data based on a sample except in P3, P4, H3, and H4. For
+information on confidentiality protection, sampling error,
+nonsampling error, definitions, and count corrections see
+http://factfinder.census.gov/home/en/datanotes/expsf3.htm.
+
+
+
+
