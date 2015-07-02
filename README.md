@@ -33,7 +33,7 @@ This README would normally document whatever steps are necessary to get your app
 ##How to test if your mapper/reducer works before running it on cluster
 
 ```
-./map.py < inputfile.csv | sort | ./reduce.py
+./map.py < inputfile.csv | sort | ./reduce.py >> output.txt
 ```
 
 ##How to run it on cluster:
@@ -48,3 +48,4 @@ hadoop fs -mv inputfile.csv jobinput/inputfile.csv
 ###Run mapreduce job
 ```
 hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.6.0-mr1-cdh5.4.0.jar -mapper map.py -reducer reduce.py -file map.py -file reduce.py -input jobinput -output joboutput
+```
