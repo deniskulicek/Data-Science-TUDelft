@@ -54,3 +54,6 @@ hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.5
 ```
 hadoop fs -cat joboutput/part-00000 >> hadoopoutput.txt
 ```
+
+###Warc to Dic
+It's the script to translate a warc into a Dictionary. However it's still not working. To use it, put a warc file in the same folder of the script and run the script. An error will pop up, look into it if you have time, as i won't be able to work on it this weekend
