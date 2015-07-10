@@ -1,0 +1,39 @@
+Things JW knows about the projects
+1. Exmaple setup:
+> git clone https://github.com/norvigaward/warcexamples
+
+2. Install Maven:
+> sudo apt-get install maven
+
+3. Build examples:  
+> cd ~/src/warcexamples
+> mvn install
+
+4. Initialise Hadoop: (once every terminal I think)
+> kinit TUD-DS04@CUA.SURFSARA.NL  
+(Password : DataScience1)
+
+5. Run example:
+I was able to use files like this:
+> yarn jar warcexamples-1.1-fatjar.jar headers /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
+
+6. There are 4 examples (defined by the main(String[] args) methods in the jar file)
+- NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
+
+    yarn jar warcexamples.jar ner hdfs_input_path hdfs_output_path
+
+- servertype: extracts the servertype information from the wat files. See the nl.surfsara.warcexamples.hadoop.wat package for relevant code. Usage:
+
+    yarn jar warcexamples.jar servertype hdfs_input_path hdfs_output_path
+
+- href: parses the html in warc files and outputs the url of the crawled page and the links (href attribute) from the parsed document. See the nl.surfsara.warcexamples.hadoop.warc package for relevant code. Usage:
+
+    yarn jar warcexamples.jar href hdfs_input_path hdfs_output_path
+
+    Note that the input path should consist of sequence files.
+
+- headers: dumps the headers from a wat, warc or wet file (gzipped ones). This is not a mapreduce example but files are read from HDFS. This can be run from your local computer or the VM. See the nl.surfsara.warcexamples.hadoop.hdfs package for relevant code. Usage:
+
+    yarn jar warcexamples.jar headers hdfs_input_file
+
+6. Build your own java files, based on the examples, rebuild, and run on hadoop.
