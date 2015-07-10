@@ -71,7 +71,7 @@ or
 10. Get the output to your local VM:
 > hadoop fs -ls href_output
 > hadoop fs -cat href_output/part-r-00000 >> href_output.txt
-(Note: default href output size on TEST data is > 700MB)
+(Note: default href output size on TEST data is 1.4GB, 1382002689 bytes to be precise)
 
 11. (Optional) Kill a job
 > yarn application -kill application_#########
