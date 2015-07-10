@@ -36,4 +36,4 @@ I was able to use files like this:
 
     yarn jar warcexamples.jar headers hdfs_input_file
 
-6. Build your own java files, based on the examples, rebuild, and run on hadoop.
+7. Build your own java files, based on the examples, rebuild, and run on hadoop.
