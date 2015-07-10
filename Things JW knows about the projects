@@ -42,4 +42,19 @@ I was able to use files like this:
 
     yarn jar warcexamples.jar headers hdfs_input_file
 
-7. Build your own java files, based on the examples, rebuild, and run on hadoop.
+7. Possible Optimization (WHEN USING PIG)
+- mapred.reduce.slowstart.completed.maps=0.90
+  
+  Adding this to the example gives:
+  > yarn jar warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
+
+8. See Job Progress on the cluster
+- On the vm go to: http://head05.hathi.surfsara.nl/cluster/
+- Or, on your won computer, make sure that this is added:
+  - (Firefox) about:config >> network.negotiate-auth.trusted-uris >> hathi.surfsara.nl.
+
+9. Kill a job
+> yarn application -kill application_#########
+(Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
+
+10. Build your own java files, based on the examples, rebuild, and run on hadoop.
