@@ -12,7 +12,7 @@ Things JW knows about the projects
 > sudo apt-get install maven
 
 3. Build examples:  
-> cd ~/src/warcexamples
+> cd /warcexamples
 > mvn install
 
 4. Initialise Hadoop: (once every terminal I think)
