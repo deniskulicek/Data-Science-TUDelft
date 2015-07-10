@@ -35,7 +35,8 @@ Things JW knows about the projects
 or
 
 > cd /target
-> yarn jar warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output.txt
+> yarn jar warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
+(Note that a folder ´href_output´ will be created in the user data folder)
 
 7. There are 4 examples (defined by the main(String[] args) methods in the jar file)
 - NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
@@ -60,15 +61,20 @@ or
 - mapred.reduce.slowstart.completed.maps=0.90
   
   Adding this to the example gives:
-  > yarn jar warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz headers_output.txt
+  > yarn jar warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
 
 9. See Job Progress on the cluster
 - On the vm go to: http://head05.hathi.surfsara.nl/cluster/
 - Or, on your won computer, make sure that this is added:
   - (Firefox) about:config >> network.negotiate-auth.trusted-uris >> hathi.surfsara.nl.
 
-10. Kill a job
+10. Get the output to your local VM:
+> hadoop fs -ls href_output
+> hadoop fs -cat href_output/part-r-00000 >> href_output.txt
+(Note: default href output size on TEST data is > 700MB)
+
+11. (Optional) Kill a job
 > yarn application -kill application_#########
 (Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
 
-11. Build your own java files, based on the examples, rebuild, and run on hadoop.
+12. Build your own java files, based on the examples, rebuild, and run on hadoop.
