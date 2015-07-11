@@ -80,7 +80,7 @@ or
 (Note: default href output size on TEST data is 1.4GB, 1382002689 bytes to be precise)
 
 ### 11. (Optional) Kill a job ###
-> yarn application -kill application_#########
+    yarn application -kill application_#########
 (Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
 
 ### 12. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
