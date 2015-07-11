@@ -1,6 +1,4 @@
-# README #
-
-##Things JW knows about the project##
+# README / Things JW knows about the project #
 
 ### 0. SurfSarah ###
 
