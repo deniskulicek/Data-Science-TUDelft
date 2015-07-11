@@ -49,7 +49,7 @@ public class WordCount extends Configured implements Tool {
 		job.setReducerClass(Reducer.class);
 		job.setInputFormatClass(WarcSequenceFileInputFormat.class);
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		// Execute job and return status
 		return job.waitForCompletion(true) ? 0 : 1;

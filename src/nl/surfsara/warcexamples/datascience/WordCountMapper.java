@@ -29,6 +29,7 @@ import org.jwat.common.Payload;
 import org.jwat.warc.WarcRecord;
 
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Map function that from a WarcRecord extracts all words.
@@ -36,7 +37,7 @@ import java.io.IOException;
  * 
  * @author jan.willem.van.velzen@gmail.com
  */
-class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, IntWritable> {
+class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 	private static enum Counters {
 		CURRENT_RECORD, NUM_HTTP_RESPONSE_RECORDS
 	}
@@ -65,26 +66,31 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, IntWritable
 						if (warcContent == null || "".equals(warcContent)) {
 							// NOP
 						} else {
-							String targetURI = value.header.warcTargetUriStr;
+                            String targetURI = value.header.warcTargetUriStr;
 
-							int count = -1;
-							try{
-								count = countWords(warcContent);
-							}
-							catch(Exception e){
+                            final HashMap<String, Integer> count = new HashMap<String, Integer>();
+                            try {
+                                countWords(count, warcContent);
+                            } catch (Exception e) {
 
-							}
+                            }
+                            ArrayList<String> words = new ArrayList<String>();
+                            for (Map.Entry<String, Integer> e : count.entrySet()) {
+                                words.add(e.getKey());
+                            }
 
-							Document doc = Jsoup.parse(warcContent);
+                            Collections.sort(words, new Comparator<String>() {
+                                @Override
+                                public int compare(String s, String t1) {
+                                    return count.get(s) - count.get(t1);
+                                }
+                            });
 
-							Elements links = doc.select("a");
-							for (Element link : links) {
-								String absHref = link.attr("abs:href");
-								// Omit nulls and empty strings
-								if (absHref != null && !("".equals(absHref))) {
-									context.write(new Text(targetURI), new IntWritable(count));
-								}
-							}
+                            int max = Math.min(10, words.size());
+                            for(int i = 0 ; i < max; i++){
+                                String word = words.get(i);
+                                context.write(new Text(targetURI), new Text(word + " : " + count.get(word)));
+                            }
 						}
 					}
 				}
@@ -93,29 +99,36 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, IntWritable
 	}
 
 
-    public static int countWords(String s){
-
-        int wordCount = 0;
+    public static void countWords(HashMap<String, Integer> counter, String s){
 
         boolean word = false;
+		String currentWord = "";
         int endOfLine = s.length() - 1;
 
         for (int i = 0; i < s.length(); i++) {
+          char c =   s.charAt(i);
+            boolean isLetter = Character.isLetter(c);
             // if the char is a letter, word = true.
-            if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
+            if (isLetter && i != endOfLine) {
                 word = true;
+                currentWord += c;
                 // if char isn't a letter and there have been letters before,
                 // counter goes up.
-            } else if (!Character.isLetter(s.charAt(i)) && word) {
-                wordCount++;
+            } else if (!isLetter && word) {
+                currentWord +=c;
                 word = false;
+                int count = counter.get(currentWord);
+                counter.put(currentWord, count+1);
+                currentWord =  "";
                 // last word of String; if it doesn't end with a non letter, it
                 // wouldn't count without this.
-            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
-                wordCount++;
+            } else if (isLetter && i == endOfLine) {
+                currentWord +=c;
+                int count = counter.get(currentWord);
+                counter.put(currentWord, count+1);
+                currentWord =  "";
             }
         }
-        return wordCount;
     }
 
 
