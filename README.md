@@ -39,13 +39,19 @@ This README would normally document whatever steps are necessary to get your app
 ##How to run it on cluster:
 
 Things JW knows about the projects
+
 0. SurfSarah
+
 - Surfsarah VM: 
    http://norvigaward.github.io/gettingstarted.html
+
 - VM root password: 
    award2014
+
 - User data: hdfs://hathi-surfsara/user/TUD-DS04/
+
 - Test data: /data/public/common-crawl/crawl-data/CC-TEST-2014-10/ (80 GB)
+
 - Full data: /data/public/common-crawl/CC-MAIN-2014-10/ (48.6 TB)
 
 1. Exmaple setup:
@@ -68,13 +74,16 @@ Things JW knows about the projects
 > hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211
 > hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc
 
+
 6. Run example:
 > yarn jar target/warcexamples-1.1-fatjar.jar headers /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
 
 or
-
 > yarn jar target/warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
 (Note that a folder ´href_output´ will be created in the user data folder)
+
+
+
 
 7. There are 4 examples (defined by the main(String[] args) methods in the jar file)
 - NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
@@ -102,8 +111,11 @@ or
   > yarn jar target/warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
 
 9. See Job Progress on the cluster
+
 - On the vm go to: http://head05.hathi.surfsara.nl/cluster/
+
 - Or, on your won computer, make sure that this is added:
+
   - (Firefox) about:config >> network.negotiate-auth.trusted-uris >> hathi.surfsara.nl.
 
 10. Get the output to your local VM:
