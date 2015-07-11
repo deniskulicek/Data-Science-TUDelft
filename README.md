@@ -87,7 +87,12 @@ Note that the input path should consist of sequence files.
     yarn application -kill application_#########
 (Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
 
-### 12. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
+### 12. (Optional) cleanup after yourself ###
+Because you have to define a new directory every time you run a test, you might want to clean up after yourself:
+
+    hadoop fs -rm -r hdfs_output_path
+
+### 13. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
 
 ###̉ TODO LIST###
 So we have done the Mapper. What is missing is to do the Reducer.
