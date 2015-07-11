@@ -94,7 +94,7 @@ Because you have to define a new directory every time you run a test, you might 
 
 ### 13. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
 
-###̉ TODO LIST###
+###̉ TODO LIST (FOR DENIS AND TAHA)###
 So we have done the Mapper. What is missing is to do the Reducer.
 The Mapper goes through all the pages, creates a HashMap of the word frequency(HTML filtered out) and all the links for a page. Since the Reducer can only recieve things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
  
