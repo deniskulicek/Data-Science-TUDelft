@@ -125,5 +125,7 @@ SideNote:
 
 * The current test is done with
 ~~~
-yarn jar target/warcexamples-1.1-fatjar.jar wordcount /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-**00000**-ip-10-183-142-35.ec2.internal.warc.seq href_output
+yarn jar target/warcexamples-1.1-fatjar.jar wordcount /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
 ~~~
+Note the 00000 near the end. There are 99999 (lucky guess, but at least a lot :p) more of these files, and this is only the first in the sequence. 
+You could look into parsing the other ones as well.
