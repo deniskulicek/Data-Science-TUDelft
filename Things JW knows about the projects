@@ -29,13 +29,11 @@ Things JW knows about the projects
 > hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc
 
 6. Run example:
-> cd /target
-> yarn jar warcexamples-1.1-fatjar.jar headers /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
+> yarn jar target/warcexamples-1.1-fatjar.jar headers /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
 
 or
 
-> cd /target
-> yarn jar warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
+> yarn jar target/warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
 (Note that a folder ´href_output´ will be created in the user data folder)
 
 7. There are 4 examples (defined by the main(String[] args) methods in the jar file)
@@ -61,7 +59,7 @@ or
 - mapred.reduce.slowstart.completed.maps=0.90
   
   Adding this to the example gives:
-  > yarn jar warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
+  > yarn jar target/warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
 
 9. See Job Progress on the cluster
 - On the vm go to: http://head05.hathi.surfsara.nl/cluster/
