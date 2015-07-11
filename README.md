@@ -56,7 +56,8 @@ or
 ~~~~
     yarn jar warcexamples.jar href hdfs_input_path hdfs_output_path
 ~~~~
-    Note that the input path should consist of sequence files.
+
+Note that the input path should consist of sequence files.
 
 * headers: dumps the headers from a wat, warc or wet file (gzipped ones). This is not a mapreduce example but files are read from HDFS. This can be run from your local computer or the VM. See the nl.surfsara.warcexamples.hadoop.hdfs package for relevant code. Usage:
 ~~~~
