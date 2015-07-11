@@ -70,8 +70,9 @@ Note that the input path should consist of sequence files.
 * mapred.reduce.slowstart.completed.maps=0.90
   
   Adding this to the example gives:
+~~~~
     yarn jar target/warcexamples-1.1-fatjar.jar headers -D mapred.reduce.slowstart.completed.maps=0.90 /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
-
+~~~~
 ### 9. See Job Progress on the cluster ###
 
 * On the vm go to: http://head05.hathi.surfsara.nl/cluster/
