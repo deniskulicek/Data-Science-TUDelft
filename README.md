@@ -44,24 +44,24 @@ or
 (Note that a folder ´href_output´ will be created in the user data folder)
 
 ### 7. There are 4 examples (defined by the main(String[] args) methods in the jar file) ###
-- NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
-
+* NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
+~~~~
     yarn jar warcexamples.jar ner hdfs_input_path hdfs_output_path
-
-- servertype: extracts the servertype information from the wat files. See the nl.surfsara.warcexamples.hadoop.wat package for relevant code. Usage:
-
+~~~~
+* servertype: extracts the servertype information from the wat files. See the nl.surfsara.warcexamples.hadoop.wat package for relevant code. Usage:
+~~~~
     yarn jar warcexamples.jar servertype hdfs_input_path hdfs_output_path
-
-- href: parses the html in warc files and outputs the url of the crawled page and the links (href attribute) from the parsed document. See the nl.surfsara.warcexamples.hadoop.warc package for relevant code. Usage:
-
+~~~~
+* href: parses the html in warc files and outputs the url of the crawled page and the links (href attribute) from the parsed document. See the nl.surfsara.warcexamples.hadoop.warc package for relevant code. Usage:
+~~~~
     yarn jar warcexamples.jar href hdfs_input_path hdfs_output_path
-
+~~~~
     Note that the input path should consist of sequence files.
 
-- headers: dumps the headers from a wat, warc or wet file (gzipped ones). This is not a mapreduce example but files are read from HDFS. This can be run from your local computer or the VM. See the nl.surfsara.warcexamples.hadoop.hdfs package for relevant code. Usage:
-
+* headers: dumps the headers from a wat, warc or wet file (gzipped ones). This is not a mapreduce example but files are read from HDFS. This can be run from your local computer or the VM. See the nl.surfsara.warcexamples.hadoop.hdfs package for relevant code. Usage:
+~~~~
     yarn jar warcexamples.jar headers hdfs_input_file
-
+~~~~
 ### 8. Possible Optimization (WHEN USING PIG) ###
 * mapred.reduce.slowstart.completed.maps=0.90
   
