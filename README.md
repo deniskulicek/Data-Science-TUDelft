@@ -96,16 +96,18 @@ Because you have to define a new directory every time you run a test, you might 
 ### 13. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
 
 ###̉ TODO LIST (FOR DENIS AND TAHA)###
-We have changed the project a little bit by making it easier: we are going to look on how page are either shared or original (so not which one is the original and which one not). 
+We have changed the project expectations a little bit by making it easier: we are going to look on how page are either shared or original (so not which one is the original and which one not), and therefore dropping some of our ambition. 
 
-So we have done the Mapper. What is missing is to do the Reducer.
-The Mapper goes through all the pages, creates a HashMap of the word frequency(HTML filtered out) and all the links for a page. Since the Reducer can only recieve things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
+So we have done the Mapper (nl.surfsara.warcexamples.datascience.WordCountMapper). What is missing is to do the Reducer (nl.surfsara.warcexamples.datascience.WordCountReducer).
+The Mapper goes through all the pages, creates a HashMap of the word frequency(with the HTML tags filtered out beforehand) and all the links for a page. Since the Reducer can only receive things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
  
-The Reducer recieves:
+The Reducer receives:
 
-* string, string
+* string, Iterable<string>
 
-* it is either (URL,link) or (URL, str(HashMap(string:int)))  --- in this latter case you need to convert back from string to Hashmap, you will recognise because all the (URL, str(HashMap(string:int))) start with the word "count". To convert it back, just revert the function parsetoMap we did in the WordCountMapper
+* The String in the Iterable can either be a link (starts with http://) or the word counts (starting with Count:{ )
+
+    * --- in this latter case you need to convert back from string to Hashmap, you will recognise because all the (URL, str(HashMap(string:int))) start with the word "count". To convert it back, just revert the function parsetoMap we did in the WordCountMapper
 
 * It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are. Do compute only the similarity between pages that have a link!
 
@@ -115,6 +117,13 @@ The Reducer recieves:
 
 For this you want to look at the following files:
 
-* Work on file by extending Reducer and overload reduce method. A file for this for you to work has been created, it is src/nl/surfsara/warcexamples/datascience/WordCounterReducer.java
+* Work on file by extending Reducer and overload reduce method. A file for this for you to work has been created, it is src/nl/surfsara/warcexamples/datascience/WordCounterReducer.java, with the Reducer code decompiled, and commented out, in there.
 
 * If you want to look at our Mapper, it is in src/nl/surfsara/warcexamples/datascience/WordCountMapper.java
+
+SideNote:
+
+* The current test is done with
+~~~
+yarn jar target/warcexamples-1.1-fatjar.jar wordcount /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-**00000**-ip-10-183-142-35.ec2.internal.warc.seq href_output
+~~~
