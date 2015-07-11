@@ -64,19 +64,15 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 						if (warcContent == null && "".equals(warcContent)) {
 							// NOP
 						} else {
-
-                            final HashMap<String, Integer> count = new HashMap<String, Integer>();
                             try {
-                                //Remove all HTML from warcContent
-                                warcContent = Jsoup.parse(warcContent).text();
-
-                                countWords(count, warcContent);
+                                //Remove all HTML from warcContent, right now it seems to empty the pages completely. Please do test for yourself
+                                //warcContent = Jsoup.parse(warcContent).text();
                             } catch (Exception e) {
                             }
 
                             String targetURI = value.header.warcTargetUriStr;
                             //Write Word Count Mapping
-                            context.write(new Text(targetURI), new Text(parseToString(count)));
+                            context.write(new Text(targetURI), new Text(parseToString(countWords(warcContent))));
 
                             //Write Links
                             Document doc = Jsoup.parse(warcContent);
@@ -96,7 +92,8 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 	}
 
 
-    public static void countWords(HashMap<String, Integer> counter, String s){
+    public static HashMap<String, Integer> countWords( String s){
+        HashMap<String, Integer> counter = new HashMap<String, Integer>();
 
         boolean word = false;
 		String currentWord = "";
@@ -113,18 +110,19 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
                 // counter goes up.
             } else if (!isLetter && word) {
                 word = false;
-                int count =  counter.get(currentWord);
-                counter.put(currentWord, count+1);
+                Integer count =  counter.get(currentWord);
+                counter.put(currentWord, count == null?1:count+1);
                 currentWord = "";
                 // last word of String; if it doesn't end with a non letter, it
                 // wouldn't count without this.
             } else if (isLetter && i == endOfLine) {
                 currentWord += c;
-                int count =  counter.get(currentWord);
-                counter.put(currentWord, count+1);
+                Integer count =  counter.get(currentWord);
+                counter.put(currentWord, count == null?1:count+1);
                 currentWord = "";
             }
         }
+        return counter;
     }
 
 
@@ -136,7 +134,8 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
         }
 
         //Remove last comma
-        res  = res.substring(0, res.length()-1);
+        if(m.size()>0)
+            res  = res.substring(0, res.length()-1);
 
         return res + "}";
     }
