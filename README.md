@@ -91,12 +91,14 @@ Note that the input path should consist of sequence files.
 
 ###̉ TODO LIST###
 So we have done the Mapper. What is missing is to do the Reducer.
-The Mapper goes through all the pages, creates a HashMap of the word frequency(HTML filtered out) and all the links for a page. Since the reducer can only recieve things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
+The Mapper goes through all the pages, creates a HashMap of the word frequency(HTML filtered out) and all the links for a page. Since the Reducer can only recieve things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
  
 The Reducer recieves:
 
 * string, string
 
-* it is either URL, link or URL, str(HashMap(string:int))  --- in this latter case you need to convert back from string to Hashmap 
+* it is either (URL,link) or (URL, str(HashMap(string:int)))  --- in this latter case you need to convert back from string to Hashmap 
 
-* It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are (filter the HTML words first). Do compute only the similarity between pages that have a link! 
+* It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are (filter the HTML words first). Do compute only the similarity between pages that have a link!
+
+*the algorithm should give a low score to the pages that have a really similar word hashmap and a high score to those that have a original hashmap. So the pages that are highly "shared" gets a low value, while the pages that are "uncommon" gets a high value
