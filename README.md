@@ -90,7 +90,13 @@ Note that the input path should consist of sequence files.
 ### 12. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
 
 ###̉ TODO LIST###
-1. Modify Reducer to compute the originality of a page:
+So we have done the Mapper. What is missing is to do the Reducer.
+The Mapper goes through all the pages, creates a HashMap of the word frequency(HTML filtered out) and all the links for a page. Since the reducer can only recieve things one way, we decided to pass everything as (String,String) with the first argument as the key - the URL of the page.
+ 
+The Reducer recieves:
 
-* It recieves an HashMap(string:HashMap(string:int)) that is hashmap(URL:HashMap(word:occurrence))
-* It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are (filter the HTML words first)
+* string, string
+
+* it is either URL, link or URL, str(HashMap(string:int))  --- in this latter case you need to convert back from string to Hashmap 
+
+* It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are (filter the HTML words first). Do compute only the similarity between pages that have a link! 
