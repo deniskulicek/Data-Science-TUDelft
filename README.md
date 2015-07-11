@@ -104,7 +104,7 @@ The Reducer recieves:
 
 * string, string
 
-* it is either (URL,link) or (URL, str(HashMap(string:int)))  --- in this latter case you need to convert back from string to Hashmap, you will recognise because all the (URL, str(HashMap(string:int))) start with the word "count"
+* it is either (URL,link) or (URL, str(HashMap(string:int)))  --- in this latter case you need to convert back from string to Hashmap, you will recognise because all the (URL, str(HashMap(string:int))) start with the word "count". To convert it back, just revert the function parsetoMap we did in the WordCountMapper
 
 * It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are. Do compute only the similarity between pages that have a link!
 
