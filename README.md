@@ -1,58 +1,18 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
-
-# Data-Science-TUDelft
-
-##How to test if your mapper/reducer works before running it on cluster
-
-```
-./map.py < inputfile.csv | sort | ./reduce.py >> output.txt
-```
-
-##How to run it on cluster:
-
-Things JW knows about the projects
+##Things JW knows about the project##
 
 ### 0. SurfSarah ###
 
-- Surfsarah VM: 
--- http://norvigaward.github.io/gettingstarted.html
+* Surfsarah VM: 
+** http://norvigaward.github.io/gettingstarted.html
 
-- VM root password: 
--- award2014
+* VM root password: 
+** award2014
 
-- User data: hdfs://hathi-surfsara/user/TUD-DS04/
-
-- Test data: /data/public/common-crawl/crawl-data/CC-TEST-2014-10/ (80 GB)
-
-- Full data: /data/public/common-crawl/CC-MAIN-2014-10/ (48.6 TB)
+* User data: hdfs://hathi-surfsara/user/TUD-DS04/
+* Test data: /data/public/common-crawl/crawl-data/CC-TEST-2014-10/ (80 GB)
+* Full data: /data/public/common-crawl/CC-MAIN-2014-10/ (48.6 TB)
 
 ### 1. Exmaple setup: ###
 > git clone https://github.com/norvigaward/warcexamples
@@ -128,3 +88,11 @@ or
 (Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
 
 ### 12. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
+
+# Data-Science-TUDelft (OLD README)
+
+##How to test if your mapper/reducer works before running it on cluster
+
+```
+./map.py < inputfile.csv | sort | ./reduce.py >> output.txt
+```
