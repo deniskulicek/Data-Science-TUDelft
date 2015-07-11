@@ -112,6 +112,6 @@ The Reducer recieves:
 
 For this you want to look at the following files:
 
-* Work on file by extending Reducer and overload reduce method 
+* Work on file by extending Reducer and overload reduce method. A file for this for you to work has been created, it is src/nl/surfsara/warcexamples/datascience/WordCounterReducer.java
 
 * If you want to look at our Mapper, it is in src/nl/surfsara/warcexamples/datascience/WordCountMapper.java
