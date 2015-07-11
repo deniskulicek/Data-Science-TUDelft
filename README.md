@@ -13,13 +13,13 @@
 * Full data: /data/public/common-crawl/CC-MAIN-2014-10/ (48.6 TB)
 
 ### 1. Example setup: ###
-    git clone https://github.com/norvigaward/warcexamples
+    git clone https://bitbucket.org/Spoetnic/data-science-tudelft
 
 ### 2. Install Maven: ###
     sudo apt-get install maven
 
-### 3. Build examples: ###
-    cd /warcexamples
+### 3. Build code: ###
+    cd /data-science-tudelft
     mvn install
 
 ### 4. Initialise Hadoop: (once every terminal I think) ###
@@ -41,7 +41,12 @@ or
     yarn jar target/warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
 (Note that a folder ´href_output´ will be created in the user data folder)
 
-### 7. There are 4 examples (defined by the main(String[] args) methods in the jar file) ###
+### 7. There are 4 examples and our code (defined by the @run methods in the jar file) ###
+* wordcount: Our own little slice of heaven. Usage:
+~~~~
+    yarn jar warcexamples.jar wordcount hdfs_input_path hdfs_output_path
+~~~~
+
 * NER: mapreduce example that performs Named Entity Recognition on text in wet files. See the nl.surfsara.warcexamples.hadoop.wet package for relevant code. Usage:
 ~~~~
     yarn jar warcexamples.jar ner hdfs_input_path hdfs_output_path
