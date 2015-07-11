@@ -43,10 +43,10 @@ Things JW knows about the projects
 ### 0. SurfSarah ###
 
 - Surfsarah VM: 
-   http://norvigaward.github.io/gettingstarted.html
+-- http://norvigaward.github.io/gettingstarted.html
 
 - VM root password: 
-   award2014
+-- award2014
 
 - User data: hdfs://hathi-surfsara/user/TUD-DS04/
 
