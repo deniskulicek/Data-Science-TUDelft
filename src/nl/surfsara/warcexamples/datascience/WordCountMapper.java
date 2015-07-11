@@ -16,9 +16,7 @@
 package nl.surfsara.warcexamples.datascience;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -63,33 +61,32 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 						// NOP
 					} else {
 						String warcContent = IOUtils.toString(payload.getInputStreamComplete());
-						if (warcContent == null || "".equals(warcContent)) {
+						if (warcContent == null && "".equals(warcContent)) {
 							// NOP
 						} else {
-                            String targetURI = value.header.warcTargetUriStr;
 
                             final HashMap<String, Integer> count = new HashMap<String, Integer>();
                             try {
+                                //Remove all HTML from warcContent
+                                warcContent = Jsoup.parse(warcContent).text();
+
                                 countWords(count, warcContent);
                             } catch (Exception e) {
-
-                            }
-                            ArrayList<String> words = new ArrayList<String>();
-                            for (Map.Entry<String, Integer> e : count.entrySet()) {
-                                words.add(e.getKey());
                             }
 
-                            Collections.sort(words, new Comparator<String>() {
-                                @Override
-                                public int compare(String s, String t1) {
-                                    return count.get(s) - count.get(t1);
+                            String targetURI = value.header.warcTargetUriStr;
+                            //Write Word Count Mapping
+                            context.write(new Text(targetURI), new Text(parseToString(count)));
+
+                            //Write Links
+                            Document doc = Jsoup.parse(warcContent);
+                            Elements links = doc.select("a");
+                            for (Element link : links) {
+                                String absHref = link.attr("abs:href");
+                                // Omit nulls and empty strings
+                                if (absHref != null && !("".equals(absHref))) {
+                                    context.write(new Text(targetURI), new Text(absHref));
                                 }
-                            });
-
-                            int max = Math.min(10, words.size());
-                            for(int i = 0 ; i < max; i++){
-                                String word = words.get(i);
-                                context.write(new Text(targetURI), new Text(word + " : " + count.get(word)));
                             }
 						}
 					}
@@ -115,21 +112,54 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
                 // if char isn't a letter and there have been letters before,
                 // counter goes up.
             } else if (!isLetter && word) {
-                currentWord +=c;
                 word = false;
-                int count = counter.get(currentWord);
+                int count =  counter.get(currentWord);
                 counter.put(currentWord, count+1);
-                currentWord =  "";
+                currentWord = "";
                 // last word of String; if it doesn't end with a non letter, it
                 // wouldn't count without this.
             } else if (isLetter && i == endOfLine) {
-                currentWord +=c;
-                int count = counter.get(currentWord);
+                currentWord += c;
+                int count =  counter.get(currentWord);
                 counter.put(currentWord, count+1);
-                currentWord =  "";
+                currentWord = "";
             }
         }
     }
 
+
+    public static String parseToString(HashMap<String, Integer> m){
+        String res = "Count:{";
+
+        for(Map.Entry<String, Integer> e : m.entrySet()){
+            res += e.getKey()+":"+e.getValue()+",";
+        }
+
+        //Remove last comma
+        res  = res.substring(0, res.length()-1);
+
+        return res + "}";
+    }
+    public static HashMap<String, Integer> parseToMap(String s){
+        HashMap<String, Integer> res = new HashMap<String, Integer>();
+
+        if(!s.startsWith("Count:{"))
+            return res;
+
+        s = s.replace("Count:{", "").replace("}","");
+        String[] counts = s.split(",");
+        for(String count : counts){
+            String[] parts = count.split(":");
+            if(parts.length == 2){
+                try{
+                    res.put(parts[0], Integer.parseInt(parts[1]));
+                }catch(Exception e){
+
+                }
+            }
+        }
+
+        return res;
+    }
 
 }

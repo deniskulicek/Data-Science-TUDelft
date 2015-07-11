@@ -36,7 +36,7 @@ import org.jwat.warc.WarcRecord;
  * 
  * @author mathijs.kattenberg@surfsara.nl
  */
-class HrefExtracter extends Mapper<LongWritable, WarcRecord, Text, IntWritable> {
+class HrefExtracter extends Mapper<LongWritable, WarcRecord, Text, Text> {
 	private static enum Counters {
 		CURRENT_RECORD, NUM_HTTP_RESPONSE_RECORDS
 	}
@@ -67,58 +67,20 @@ class HrefExtracter extends Mapper<LongWritable, WarcRecord, Text, IntWritable> 
 						} else {
 							String targetURI = value.header.warcTargetUriStr;
 
-							int count = -1;
-							try{
-								count = countWords(warcContent);//warcContent.split("\\s+").length;
+							Document doc = Jsoup.parse(warcContent);
+
+							Elements links = doc.select("a");
+							for (Element link : links) {
+								String absHref = link.attr("abs:href");
+								// Omit nulls and empty strings
+								if (absHref != null && !("".equals(absHref))) {
+									context.write(new Text(targetURI), new Text(absHref));
+								}
 							}
-							catch(Exception e){
-
-							}
-
-                            context.write(new Text(targetURI), new IntWritable(count));
-
-//							Document doc = Jsoup.parse(warcContent);
-//
-//							Elements links = doc.select("a");
-//							for (Element link : links) {
-//								String absHref = link.attr("abs:href");
-//								// Omit nulls and empty strings
-//								if (absHref != null && !("".equals(absHref))) {
-//									context.write(new Text(targetURI), new IntWritable(count));
-//								}
-//							}
 						}
 					}
 				}
 			}
 		}
 	}
-
-
-    public static int countWords(String s){
-
-        int wordCount = 0;
-
-        boolean word = false;
-        int endOfLine = s.length() - 1;
-
-        for (int i = 0; i < s.length(); i++) {
-            // if the char is a letter, word = true.
-            if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
-                word = true;
-                // if char isn't a letter and there have been letters before,
-                // counter goes up.
-            } else if (!Character.isLetter(s.charAt(i)) && word) {
-                wordCount++;
-                word = false;
-                // last word of String; if it doesn't end with a non letter, it
-                // wouldn't count without this.
-            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
-                wordCount++;
-            }
-        }
-        return wordCount;
-    }
-
-
 }
