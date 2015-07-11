@@ -5,10 +5,10 @@
 ### 0. SurfSarah ###
 
 * Surfsarah VM: 
-** http://norvigaward.github.io/gettingstarted.html
+    * http://norvigaward.github.io/gettingstarted.html
 
 * VM root password: 
-** award2014
+    * award2014
 
 * User data: hdfs://hathi-surfsara/user/TUD-DS04/
 * Test data: /data/public/common-crawl/crawl-data/CC-TEST-2014-10/ (80 GB)
