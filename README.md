@@ -91,6 +91,6 @@ Note that the input path should consist of sequence files.
 
 ###̉ TODO LIST###
 1. Modify Reducer to compute the originality of a page:
+
 * It recieves an HashMap(string:HashMap(string:int)) that is hashmap(URL:HashMap(word:occurrence))
 * It has to compute the similarity between the pages (the keys) with an algorith that looks how similar the hashmaps are (filter the HTML words first)
-* 
