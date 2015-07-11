@@ -85,11 +85,3 @@ Note that the input path should consist of sequence files.
 (Where you have to get the application number from http://head05.hathi.surfsara.nl/cluster/)
 
 ### 12. Build your own java files, based on the examples, rebuild, and run on hadoop. ###
-
-# Data-Science-TUDelft (OLD README)
-
-##How to test if your mapper/reducer works before running it on cluster
-
-```
-./map.py < inputfile.csv | sort | ./reduce.py >> output.txt
-```
