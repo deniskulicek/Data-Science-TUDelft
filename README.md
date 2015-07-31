@@ -1,4 +1,4 @@
-# README / Things JW knows about the project #
+# README / And sufrsara's missing guide #
 
 ### 0. SurfSarah ###
 
@@ -32,6 +32,12 @@
     hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211
     hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc
 
+### 5.a) Compiling and packaging examples
+
+   mvn compile // compiles Java classes
+   mvn package // creates .jar in target directory
+   
+   *use target/warcexamples-1.1-fatjar.jar it contains all the libraries that you will need
 
 ### 6. Run example: ###
     yarn jar target/warcexamples-1.1-fatjar.jar headers /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/warc/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.gz
@@ -40,6 +46,16 @@ or
 
     yarn jar target/warcexamples-1.1-fatjar.jar href /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/1394678706211/seq/CC-MAIN-20140313024506-00000-ip-10-183-142-35.ec2.internal.warc.seq href_output
 (Note that a folder ´href_output´ will be created in the user data folder)
+
+### 6.a) 
+In order to run job on whole TEST or MAIN dataset you will need some magic. This is how you do it:
+
+
+yarn jar warcexamples-1.1-fatjar.jar wordcount /data/public/common-crawl/crawl-data/CC-TEST-2014-10/segments/*/seq/ final_job_80GB_lc -D mapred.reduce.slowstart.completed.maps=0.95 > lc80.stdout 2> lc80.stderr &
+
+notice the * in input_path.
+
+You can disregard the part after -D, it is not essential (and I am too lazy to explain it at the moment)
 
 ### 7. There are 4 examples and our code (defined by the @run methods in the jar file) ###
 * wordcount: Our own little slice of heaven. Usage:
