@@ -40,11 +40,15 @@ public class WordCount extends Configured implements Tool {
 
 		Configuration conf = this.getConf();
 
-		Job job = Job.getInstance(conf, "Taking over the world.");
+		Job job = Job.getInstance(conf, "Taking over the world... Fully");
 		job.setJarByClass(WordCount.class);
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
+		//FileInputFormat.setInputDirRecursive(job, true);
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+		//Reducer class could be an argument, but itś not. This would remove ugly switch from reducer
+		//System.out.println("REDUCER: " + args[2]);
 
 		job.setMapperClass(WordCountMapper.class);
 		job.setReducerClass(WordCountReducer.class);

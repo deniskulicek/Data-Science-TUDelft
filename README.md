@@ -129,3 +129,86 @@ yarn jar target/warcexamples-1.1-fatjar.jar wordcount /data/public/common-crawl/
 ~~~
 Note the 00000 near the end. There are 99999 (lucky guess, but at least a lot :p) more of these files, and this is only the first in the sequence. 
 You could look into parsing the other ones as well.
+
+
+***********************************************************************************
+VISUALISATION DATA:
+{
+    nodes: [
+        {
+        url:"http://website1.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        },
+        {
+        url:"http://website2.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        },
+        {
+        url:"http://website3.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        },
+        {
+        url:"http://website4.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        },
+        {
+        url:"http://website5.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        },
+        {
+        url:"http://website6.com/",
+        words: [ { w:'Bob', c:14 }, { w:'test', c:123}]
+        }
+    ],
+    edges: [
+        {
+            source: 0, target: 0,
+            srce: "http://website1.com/", 
+            dest: "http://website2.com/",
+            count: 100
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website1.com/", 
+            dest: "http://website3.com/",
+            count: 130
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website2.com/", 
+            dest: "http://website4.com/",
+            count: 234
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website3.com/", 
+            dest: "http://website4.com/",
+            count: 240
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website4.com/", 
+            dest: "http://website5.com/",
+            count: 300
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website4.com/", 
+            dest: "http://website6.com/",
+            count: 140
+        },
+        {
+            source: 0, target: 0,
+            srce: "http://website3.com/", 
+            dest: "http://website6.com/",
+            count: 175
+        }
+        ,
+        {
+            source: 0, target: 0,
+            srce: "http://website6.com/", 
+            dest: "http://website3.com/",
+            count: 200
+        }
+    ]
+}

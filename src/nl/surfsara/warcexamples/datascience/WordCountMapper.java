@@ -28,6 +28,7 @@ import org.jwat.warc.WarcRecord;
 
 import java.io.IOException;
 import java.util.*;
+import java.net.URI;
 
 /**
  * Map function that from a WarcRecord extracts all words.
@@ -71,17 +72,23 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
                             }
 
                             String targetURI = value.header.warcTargetUriStr;
-                            //Write Word Count Mapping
-                            context.write(new Text(targetURI), new Text(parseToString(countWords(warcContent))));
+                            //Write Word Count Mapping for domain, if valid URI
+                            String targetDomain = getDomain(targetURI);
 
-                            //Write Links
-                            Document doc = Jsoup.parse(warcContent);
-                            Elements links = doc.select("a");
-                            for (Element link : links) {
-                                String absHref = link.attr("abs:href");
-                                // Omit nulls and empty strings
-                                if (absHref != null && !("".equals(absHref))) {
-                                    context.write(new Text(targetURI), new Text(absHref));
+                            if(targetDomain != null) {
+
+                                context.write(new Text(targetDomain), new Text(parseToString(countWords(warcContent))));
+
+                                //Write Links
+                                Document doc = Jsoup.parse(warcContent);
+                                Elements links = doc.select("a");
+                                for (Element link : links) {
+                                    String absHref = link.attr("abs:href");
+                                    String absHrefDomain = getDomain(absHref);
+                                    // Omit nulls and empty strings
+                                    if (absHrefDomain != null && absHref != null && !("".equals(absHref))) {
+                                        context.write(new Text(targetDomain), new Text(absHrefDomain));
+                                    }
                                 }
                             }
 						}
@@ -90,6 +97,18 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 			}
 		}
 	}
+
+    public static String getDomain(String URL) {
+        
+        try {
+            URI uri = new URI(URL);
+            String domain = uri.getHost();
+            return domain.startsWith("www.")?domain.substring(4):domain;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
     public static HashMap<String, Integer> countWords( String s){
@@ -125,6 +144,7 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
         return counter;
     }
 
+    //these two will be reused in reducer code
 
     public static String parseToString(HashMap<String, Integer> m){
         String res = "Count:{";
@@ -139,6 +159,7 @@ class WordCountMapper extends Mapper<LongWritable, WarcRecord, Text, Text> {
 
         return res + "}";
     }
+
     public static HashMap<String, Integer> parseToMap(String s){
         HashMap<String, Integer> res = new HashMap<String, Integer>();
 
