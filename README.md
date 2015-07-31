@@ -24,7 +24,7 @@
 
 ### 4. Initialise Hadoop: (once every terminal I think) ###
     kinit TUD-DS04@CUA.SURFSARA.NL  
-(Password : *************)
+(Password : It was changed already if you are trying to find it...)
 
 ### 5. Look at the Hadoop File Structure: ###
     hadoop fs -ls /data/public/common-crawl/crawl-data/CC-TEST-2014-10
